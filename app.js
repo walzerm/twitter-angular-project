@@ -1,4 +1,4 @@
-var sentimeta = angular.module('sentimeta', ['ngRoute', '$locationProvider'])
+var app = angular.module('sentimeta', ['ngRoute', '$locationProvider'])
 
 
 app.config(function($routeProvider){

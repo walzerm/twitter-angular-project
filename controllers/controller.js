@@ -1,4 +1,4 @@
-app.controller('homeCtrl', function($scope){
+app.controller('homeCtrl', function($scope, $http){
 	$scope.message = 'Hello World!'
 });
 
