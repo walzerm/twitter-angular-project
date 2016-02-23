@@ -36,16 +36,22 @@ router.post('/new/user', function(req,res,next){
 	})
 })
 //Signin request and setting the JWT
-router.get('/user', function(req,res,next){
+router.get('/user/login', function(req,res,next){
 	knex('users').where({username: req.body.username}).first().then(function(user){
 		if (user){
 			var pass = req.body.password;
 			bcrypt.compare(pass,user.password,function(err,result){
-				z
+				if (result){
+					res.json({jwt:token, id:id});
+				} else {
+					console.log(err)
+				}
 			})
 		}
 	})
 })
+
+
 
 
 module.exports = router;
