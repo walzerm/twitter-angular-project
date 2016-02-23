@@ -6,7 +6,7 @@ app.config(function($routeProvider, $locationProvider){
 
 	$routeProvider
 	.when('/', {
-		templateUrl : '/public/partials/index.html',
+		templateUrl : '/partials/index.html',
 		controller  : 'mainController'
 	})
 	.when('/new', {
