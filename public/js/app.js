@@ -1,18 +1,19 @@
-var app = angular.module('sentimeta', ['ngRoute', '$locationProvider'])
+var app = angular.module('sentimetaApp', ['angularMoment','ngRoute']);
 
- 
-app.config(function($routeProvider){
+
+
+app.config(function($routeProvider, $locationProvider){
+
 	$routeProvider
 	.when('/', {
-		templateUrl : 'pages/home.html',
-		controller  : 'homeCtrl'
+		templateUrl : '/public/partials/index.html',
+		controller  : 'mainController'
 	})
-	.when('/', {
-		templateUrl : '',
-		controller  : ''		
+	.when('/new', {
+		templateUrl : 'partials/signup.html',
+		controller  : 'mainController'		
 	})
 	.otherwise({redirectTo:('/')})
 
-	$locationProvider.html5Mode(true);
 })
 
