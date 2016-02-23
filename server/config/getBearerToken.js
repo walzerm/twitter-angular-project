@@ -16,7 +16,7 @@ request({
     },
     body: "grant_type=client_credentials"
 
-}, function(err, resp, body) {
+}, function(err, res, body) {
     // Save this as the bearer token
     console.log(body);
 });
