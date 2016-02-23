@@ -1,0 +1,14 @@
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+h5,
+h6,
+p {
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 400;
+}
