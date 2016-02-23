@@ -39,7 +39,17 @@ function getTweets(screenName) {
             };
             tweets.push(tweet);
         })
-        console.log(tweets);
+        request({
+            url: 'http://www.sentiment140.com/api/bulkClassifyJson',
+            method: 'POST',
+            json: true,
+            qs: {
+                'appid': process.env.SENTIMENT_TOKEN
+            },
+            body: {"data": tweets}
+        }, function(err, res, body) {
+            console.log(body);
+        })
     })
 }
 
