@@ -11,6 +11,7 @@ app.config(function($routeProvider){
 		templateUrl : '',
 		controller  : ''		
 	})
+	.otherwise({redirectTo:('/')})
 
 	$locationProvider.html5Mode(true);
 })
