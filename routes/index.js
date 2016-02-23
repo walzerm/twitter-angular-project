@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 });
 
 //Signup knex statement
-router.post('/new', function(req,res,next){
+router.post('/new/user', function(req,res,next){
 	knex('users').where({username:req.body.username}).first().then(function(user){
 		if (user || req.body.password !== req.body.passwordConfirm){
 			//#TODO: create error route/template
@@ -27,7 +27,7 @@ router.post('/new', function(req,res,next){
               				username: req.body.username,
               				password: hash
              				}, 'BootsCats');
-              
+
               res.json({jwt:token, id:id})
             });
           });

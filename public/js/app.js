@@ -4,7 +4,7 @@ var app = angular.module('sentimetaApp', ['angularMoment','ngRoute']);
 app.config(function($routeProvider, $locationProvider){
 	$routeProvider
 	.when('/', {
-		templateUrl : 'partials/index.html',
+		templateUrl : '/public/partials/index.html',
 		controller  : 'mainController'
 	})
 	.when('/new', {
