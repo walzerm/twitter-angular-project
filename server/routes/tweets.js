@@ -7,11 +7,13 @@ router.get('/', function(req, res, next) {
   res.render('testTweet');
 });
 
+// Gets the tweet data
 router.post('/', function(req, res) {
     var screenName = req.body.handle;
 
     var prom = new Promise(
         function(resolve, reject) {
+            // API call to the titter API
             var apiURL = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
             request({
                 url: apiURL,
@@ -36,6 +38,7 @@ router.post('/', function(req, res) {
                     };
                     tweets.push(tweet);
                 })
+                // API call to the sentimate API
                 request({
                     url: 'http://www.sentiment140.com/api/bulkClassifyJson',
                     method: 'POST',
@@ -50,6 +53,7 @@ router.post('/', function(req, res) {
             })
         }
     ).then(
+        // inserts the tweets into the db if they are not already there
         function(val) {
             var data = val.data;
             data.forEach(function(tweet) {
@@ -72,7 +76,7 @@ router.post('/', function(req, res) {
             })
         }
     )
-    
+
     res.redirect('/tweets');
 })
 
