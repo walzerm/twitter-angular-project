@@ -19,6 +19,8 @@ app.config(function($routeProvider, $locationProvider, $httpProvider){
 	})
 	.otherwise({redirectTo:('/')})
 
+	$locationProvider.html5Mode(true);
+
 	$httpProvider.interceptors.push('authInterceptor');
 
 })
