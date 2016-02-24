@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var knex = require('../db/knex');
+var knex = require('../../db/knex');
 var locus = require('locus');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
@@ -49,4 +49,3 @@ router.get('/user', function(req,res,next){
 
 
 module.exports = router;
- 

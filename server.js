@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var knex = require('./db/knex');
 
-var routes = require('./routes/index');
+var routes = require('./server/routes/index');
 var api = require('./api/apiRoutes');
 
 app = express();
