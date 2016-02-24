@@ -2,11 +2,15 @@ var app = angular.module('sentimetaApp', ['angularMoment','ngRoute']);
 
 
 
-app.config(function($routeProvider, $locationProvider){
+app.config(function($routeProvider, $locationProvider, $httpProvider){
 
 	$routeProvider
 	.when('/', {
 		templateUrl : '/partials/index.html',
+		controller  : 'mainController'
+	})
+	.when('/user', {
+		templateUrl : '/partials/login.html',
 		controller  : 'mainController'
 	})
 	.when('/new', {
@@ -14,6 +18,8 @@ app.config(function($routeProvider, $locationProvider){
 		controller  : 'mainController'		
 	})
 	.otherwise({redirectTo:('/')})
+
+	$httpProvider.interceptors.push('authInterceptor');
 
 })
 
