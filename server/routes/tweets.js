@@ -9,9 +9,9 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res) {
     var screenName = req.body.handle;
-    console.log(req.body);
-    knex('tweetData').where('twitter_handle', req.body).first().then(function(twitter_handle) {
-        if (!twitter_handle) {
+
+    var prom = new Promise(
+        function(resolve, reject) {
             var apiURL = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
             request({
                 url: apiURL,
@@ -27,9 +27,6 @@ router.post('/', function(req, res) {
                 }
             }, function(err, res, body) {
                 var tweets = [];
-                console.log(process.env.TWITTER_BEARER_TOKEN);
-                console.log(body);
-                console.log('******');
                 body.forEach(function(tweet) {
                     var tweet = {
                         text: tweet.text,
@@ -48,12 +45,34 @@ router.post('/', function(req, res) {
                     },
                     body: {"data": tweets}
                 }, function(err, res, body) {
-                    console.log(body);
+                    resolve(body);
                 })
             })
-
         }
-    })
+    ).then(
+        function(val) {
+            var data = val.data;
+            data.forEach(function(tweet) {
+                knex('tweet_data').where({
+                    twitter_handle: screenName,
+                    tweet_date: tweet.date
+                }).first().then(function(tweetInTable) {
+                    if (!tweetInTable) {
+                        knex('tweet_data').insert({
+                            twitter_handle: screenName,
+                            tweet_retweets: tweet.retweets,
+                            tweet_favorites: tweet.favs,
+                            tweet_date: tweet.date,
+                            tweet_score: tweet.polarity
+                        }).then(function() {
+                            console.log('insterted ' + tweet.text);
+                        })
+                    }
+                })
+            })
+        }
+    )
+    
     res.redirect('/tweets');
 })
 
