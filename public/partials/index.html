@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>  </title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-
-</head>
-<body class="grey lighten-4">
   <nav>
     <div class="nav-wrapper blue lighten-1">
-      <a href="#" class="brand-logo"><img src="stylesheets/img/sentilogo.png" style="padding:10px; height: 1.8em"></a>
+      <a href="#" class="brand-logo"><img src="/images/sentilogo.png" style="padding:8px; height: 1.8em"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">lorem</a></li>
-        <li><a href="badges.html">ipsum</a></li>
+        <li><a href="#">lorem</a></li>
+        <li><a href="#">ipsum</a></li>
         
       </ul>
     </div>
@@ -25,16 +17,16 @@
         <br><br>
         <h1 class="header center blue-text text-lighten-1">How have you been?</h1>
         <div class="row center">
-          <h5 class="header col s12 light white-text">Providing superior personal mood tracking through the examining of online presence and emotional projection.</h5>
+          <h5 class="header col s12 light white-text" >Providing superior personal mood tracking through the examining of online presence and emotional projection.</h5>
         </div>
         <div class="row center">
-          <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light blue lighten-1">Get Started</a>
+          <a class="btn-large waves-effect waves-light blue lighten-1 modal-trigger" href="#modal1">Get Started</a>
         </div>
         <br><br>
 
       </div>
     </div>
-    <div class="parallax"><img src="img/place1.jpg" alt="Unsplashed background img 1"></div>
+    <div class="parallax"><img src="/images/place1.jpg" alt="Unsplashed background img 1"></div>
   </div>
 
 
@@ -46,20 +38,31 @@
 
 
         <div class="col s12 m6">
-          <div class="icon-block">
-
-            <h5 class="center">User Experience Focused</h5>
-
-            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
-          </div>
+          chart will go here.
         </div>
 
         <div class="col s12 m6">
-          <div class="icon-block">
-            <h5 class="center">Easy to work with</h5>
+
+        <div class="row">
+
+        <div class="card white">
+        <div class="card-content ">        
+            <span class="card-title">User Experience Focused</span>
+
+            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+          </div>  
+          </div>
+
+        </div>
+        <div class="row">
+        <div class="card white">
+        <div class="card-content">  
+            <span class="card-title">Easy to work with</span>
 
             <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
           </div>
+          </div>
+        </div>
         </div>
       </div>
 
@@ -71,11 +74,11 @@
     <div class="section no-pad-bot">
       <div class="container">
         <div class="row center">
-          <h5 class="header col s12 light white-text">khaled ipsum akjsdhfkjashdfjkashdfkjashf</h5>
+          <h5 class="header col s12 light white-text" style="position: absolute; height: 50%;">khaled ipsum akjsdhfkjashdfjkashdfkjashf</h5>
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="img/place2.jpg" alt="Unsplashed background img 2"></div>
+    <div class="parallax"><img src="/images/place2.jpg" alt="Unsplashed background img 2"></div>
   </div>
 
   <div class="container">
@@ -94,24 +97,57 @@
 
 
   <div class="parallax-container valign-wrapper" style="background-color: rgba(0, 0, 0, 0.4);">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <div class="row center">
-          <h5 class="header col s12 light white-text">khaled ipsum akjsdhfkjashdfjkashdfkjashf khaled</h5>
+    <div class="section no-pad-bot" >
+      <div class="container" >
+        <div class="row center" >
+          <h5 class="header col s12 light white-text center" style="position: absolute; height: 50%;" >khaled ipsum akjsdhfkjashdfjkashdfkjashf khaled</h5>
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="stylesheets/img/place3.jpg" alt="Unsplashed background img 3"></div>
+    <div class="parallax"><img src="/images/place3.jpg" alt="Unsplashed background img 3"></div>
   </div>
-<!-- 
-  <footer class="page-footer blue lighten-1">
-      <div class="container">
-      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">House-Gryffindor.</a>
-      </div>
-  </footer> -->
 
-   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-    <script src="js/init.js"></script>
-</body>
-</html>
+
+
+
+<!-- MODAL -->
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+    <div class="row">
+    <div class="col s6">
+      <h5 class="blue-text lighten-1">Sign Up</h5>
+      <form ng-submit='login()'>
+        <label>Username
+          <input type="text" ng-model='user.username'name="username" id="username" required>
+        </label>
+        <label>Password:
+          <input type="password" ng-model='user.password'name="password" id="password" required>
+        </label>  
+        <label>Password:
+          <input type="password" ng-model='user.passwordConfirm'name="passwordConfirm" id="passwordConfirm" required>
+        </label>
+        <div class="right-align">
+        <input class="btn-large waves-effect waves-light blue lighten-1"  type="submit" ng-click='signup()'>
+        </div>
+      </form>
+    </div>  
+
+    <div class="col s6">
+      <h5 class="blue-text lighten-1">Log In</h5
+        <form>
+          <h1>{{logger}}</h1>
+          <label>Username
+            <input type="text" ng-model='user.username'name="username" id="username" required>
+          </label>
+          <label>Password:
+            <input type="password" ng-model='user.password'name="password" id="password" required>
+          </label>  
+          <input type="submit" ng-click='login()' value='Log In'>
+          <input type="submit" ng-click='logout()' value='Log Out'>
+        </form>
+
+    </div>  
+    </div>
+  </div>
+  </div>

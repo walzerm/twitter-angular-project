@@ -7,10 +7,13 @@ var bodyParser = require('body-parser');
 var knex = require('./db/knex');
 require('dotenv').config();
 
-var routes = require('./routes/index');
+var routes = require('./server/routes/index');
 var api = require('./api/apiRoutes');
 
 app = express();
+
+// load env
+require('dotenv').config();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

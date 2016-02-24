@@ -7,11 +7,9 @@ exports.up = function(knex, Promise) {
  	table.integer('tweet_favorites').unsigned(),
  	table.timestamp('tweet_date'),
  	table.integer('tweetScore')
- }) 
+ })
 };
 
 exports.down = function(knex, Promise) {
   return knex.schema.dropTable('tweetData')
 };
-
-
