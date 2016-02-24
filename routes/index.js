@@ -25,8 +25,7 @@ router.post('/new/user', function(req,res,next){
               //#TODO: create either a user template or just redirect home
               var token = jwt.sign({
               				username: req.body.username,
-              				password: hash
-             				}, 'BootsCats');
+             				}, process.env.JWT_SECRET);
 
               res.json({jwt:token, id:id})
             });
@@ -36,15 +35,19 @@ router.post('/new/user', function(req,res,next){
 	})
 })
 //Signin request and setting the JWT
-router.get('/user/login', function(req,res,next){
+router.post('/user/login', function(req,res,next){
 	knex('users').where({username: req.body.username}).first().then(function(user){
 		if (user){
 			var pass = req.body.password;
 			bcrypt.compare(pass,user.password,function(err,result){
-				if (result){
-					res.json({jwt:token, id:id});
-				} else {
+				if (err){
 					console.log(err)
+				} else {
+              var token = jwt.sign({
+              				username: req.body.username,
+             				}, process.env.JWT_SECRET);
+
+					res.json({jwt:token, id:user.id});
 				}
 			})
 		}

@@ -21,7 +21,7 @@ app.controller('mainController',['$scope', '$http',
 
 		$scope.login = function() {
 			$http({
-				method: "GET",
+				method: "POST",
 				url: "user/login",
 				data: $scope.user
 			}).then(function(data) {
