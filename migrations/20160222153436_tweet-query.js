@@ -2,8 +2,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('tweetQuery', function(table){
   	table.increments(),
-  	table.string('username'),
-  	table.string('query')
+  	table.string('username').references('username').inTable('users').onDelete('cascade')
+  	table.string('twitter_handle')
   })
 };
 

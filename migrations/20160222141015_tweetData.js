@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
  return knex.schema.createTable('tweetData', function(table){
  	table.increments(),
  	table.string('username'),
+ 	table.string('twitter_handle'),
  	table.integer('tweet_retweets').unsigned(),
  	table.integer('tweet_favorites').unsigned(),
  	table.timestamp('tweet_date'),
