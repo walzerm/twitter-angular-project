@@ -16,6 +16,13 @@ app.controller('mainController',['$scope', '$http',
 				$scope.user.id = data.data.id
 			}).catch(function(err){
 				console.log(err);
+
+				$scope.userInvalid
+				.directive('userInvalid', function(){
+					return{
+						template: {{userInvalid}} 
+					};
+				});
 			});
 	}
 

@@ -16,6 +16,9 @@
 		<input type="password" ng-model='user.passwordConfirm'name="passwordConfirm" id="passwordConfirm" required>
 	</label>
 	<input type="submit" ng-click='signup()'>
+	
+	<span class="alert" ng-if="user.valid !== user.id 'invalid' : 'valid' color="red"'">{{ userInvalid }}</span>
+
 </form>
 </body>
 </html>
