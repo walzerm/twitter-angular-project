@@ -18,7 +18,11 @@ app.controller('mainController',['$scope', '$http', function($scope, $http){
 
 }]);
 
-app.controller('homeCtrl', function($scope, $routeParams){
-	$scope.# = $routeParams.#;
-});
+app.controller('homeCtrl', ['$scope', '$routeParams'function($scope, $routeParams){
+	$scope.dashboard = 'welcome';
+
+	$scope.loggedin = function(){
+		
+	}
+}]);
 

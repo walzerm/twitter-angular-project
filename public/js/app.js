@@ -8,16 +8,20 @@ var app = angular.module('sentimeta', [
 app.config(function($routeProvider, $locationProvider){
 
 	$routeProvider
-	.when('/index', {
-		templateUrl : 'partials/pages/index.html',
-		controller  : 'indexCtrl'
+	.when('/home', {
+		templateUrl : 'public/partials/pages/index.html',
+		controller  : 'homeCtrl'
 	})
 	.when('/new', {
-		templateUrl : 'partials/signup.html',
+		templateUrl : 'public/partials/signup.html',
 		controller  : 'mainController'		
 	})
+	.when('/user', {
+	templateUrl : 'public/partials/login.html',
+	controller  : 'mainController'		
+	})
 	.otherwise({
-		redirectTo:'/index'
+		redirectTo:'/home'
 	});
 
 
