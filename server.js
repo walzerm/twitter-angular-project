@@ -9,6 +9,7 @@ require('dotenv').config();
 
 var routes = require('./server/routes/index');
 var api = require('./api/apiRoutes');
+var tweet = require('./server/routes/tweets');
 
 app = express();
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/api', api);
+app.use('/tweets', tweet);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

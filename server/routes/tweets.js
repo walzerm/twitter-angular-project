@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
-var knex = require('../db/knex');
+var knex = require('../../db/knex');
 var request = require('request');
 
-router.get('/tweets', function(req, res) {
-    var screenName = req.body
-    knex('tweetData').where('username', req.body).first().then(function(username) {
-        if (!username) {
+router.get('/', function(req, res, next) {
+  res.render('testTweet');
+});
+
+router.post('/', function(req, res) {
+    var screenName = req.body.handle;
+    console.log(req.body);
+    knex('tweetData').where('twitter_handle', req.body).first().then(function(twitter_handle) {
+        if (!twitter_handle) {
             var apiURL = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
             request({
                 url: apiURL,
@@ -22,7 +27,9 @@ router.get('/tweets', function(req, res) {
                 }
             }, function(err, res, body) {
                 var tweets = [];
-
+                console.log(process.env.TWITTER_BEARER_TOKEN);
+                console.log(body);
+                console.log('******');
                 body.forEach(function(tweet) {
                     var tweet = {
                         text: tweet.text,
@@ -47,7 +54,10 @@ router.get('/tweets', function(req, res) {
 
         }
     })
+    res.redirect('/tweets');
 })
+
+
 
 
 module.exports = router;
