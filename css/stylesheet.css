@@ -6,9 +6,14 @@ h4 {
   font-weight: 400;
 }
 
-h5,
+h5 {
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 300;
+}
+
 h6,
 p {
   font-family: 'Oxygen', sans-serif;
   font-weight: 400;
 }
+
