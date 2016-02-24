@@ -28,6 +28,8 @@ router.post('/', function(req, res) {
                     "Authorization": "Bearer " + process.env.TWITTER_BEARER_TOKEN
                 }
             }, function(err, res, body) {
+                // returns an error if screenName is not a twitter username
+                if (body.errors) return reject(Error('Please enter a valid twitter username'));
                 var tweets = [];
                 body.forEach(function(tweet) {
                     var tweet = {
@@ -68,12 +70,17 @@ router.post('/', function(req, res) {
                             tweet_favorites: tweet.favs,
                             tweet_date: tweet.date,
                             tweet_score: tweet.polarity
-                        }).then(function() {
-                            console.log('insterted ' + tweet.text);
                         })
                     }
                 })
             })
+            knex('tweet_data').where('twitter_handle', screenName).then(function(data) {
+                console.log(data);
+            })
+        }
+    ).catch(
+        function(reason) {
+            console.log(reason);
         }
     )
 
