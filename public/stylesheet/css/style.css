@@ -1,8 +1,20 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }
 
-a {
-  color: #00B7FF;
+h5 {
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 300;
+}
+
+body,
+h6,
+p {
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 400;
 }
