@@ -1,5 +1,9 @@
-app.controller('mainController',['$scope', '$http', function($scope, $http){
+app.controller('mainController',['$scope', '$http', 
+						 function($scope,   $http){
+	
 	$scope.landing = 'Hiya';
+	$scope.logger = 'Fellas';
+
 
 	$scope.signup = function() {
 			$http({
@@ -12,8 +16,24 @@ app.controller('mainController',['$scope', '$http', function($scope, $http){
 				$scope.user.id = data.data.id
 			}).catch(function(err){
 				console.log(err);
-				console.log("BAD THING ^^^");
 			});
+	}
+
+		$scope.login = function() {
+			$http({
+				method: "POST",
+				url: "user/login",
+				data: $scope.user
+			}).then(function(data) {
+				// Save the JWT to localStorage so we can use it later
+				localStorage.setItem('jwt', data.data.jwt);
+			}).catch(function(err){
+				console.log(err);
+			});
+	}
+
+		$scope.logout = function() {
+					localStorage.removeItem('jwt');
 	}
 
 }]);

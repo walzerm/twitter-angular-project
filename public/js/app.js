@@ -5,9 +5,10 @@ var app = angular.module('sentimeta', [
 	]);
 
 
-app.config(function($routeProvider, $locationProvider){
+app.config(function($routeProvider, $locationProvider, $httpProvider){
 
 	$routeProvider
+
 	.when('/home', {
 		templateUrl : 'public/partials/pages/index.html',
 		controller  : 'homeCtrl'
@@ -28,5 +29,8 @@ app.config(function($routeProvider, $locationProvider){
 	$locationProvider.html5Mode(true);
 });
 
+	$httpProvider.interceptors.push('authInterceptor');
+
+})
 
 
