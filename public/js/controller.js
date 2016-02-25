@@ -1,19 +1,17 @@
 app.controller('mainController',['$scope', '$http', 
 						 function($scope,   $http){
-	
-	$scope.landing = 'Hiya';
-	$scope.logger = 'Fellas';
 
 
 	$scope.signup = function() {
 			$http({
 				method: "POST",
-				url: "/new/user",
-				data: $scope.user
+				url: "/new",
+				data: $scope.signUp
 			}).then(function(data) {
 				// Save the JWT to localStorage so we can use it later
+
 				localStorage.setItem('jwt', data.data.jwt);
-				$scope.user.id = data.data.id
+				// $scope.user.id = data.data.id
 			}).catch(function(err){
 				console.log(err);
 			});
@@ -22,7 +20,7 @@ app.controller('mainController',['$scope', '$http',
 		$scope.login = function() {
 			$http({
 				method: "POST",
-				url: "user/login",
+				url: "/login",
 				data: $scope.user
 			}).then(function(data) {
 				// Save the JWT to localStorage so we can use it later
@@ -35,6 +33,20 @@ app.controller('mainController',['$scope', '$http',
 		$scope.logout = function() {
 					localStorage.removeItem('jwt');
 	}
+
+		$scope.deleteUser = function(){
+			$http({
+				method:'POST',
+				url: '/delete'
+			}).then(function(){
+				res.send('still here huehuehue')
+				localStorage.removeItem('jwt');
+			})
+			.catch(function(err){
+				console.log('xxxxxxxxxxxxxx')
+				console.log(err);
+			})
+		}
 
 }]);
 

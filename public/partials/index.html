@@ -117,27 +117,26 @@
     <div class="row">
     <div class="col s6">
       <h5 class="blue-text lighten-1">Sign Up</h5>
-      <form ng-submit='login()'>
+      <form>
         <label>Username
-          <input type="text" ng-model='user.username'name="username" id="username" required>
+          <input type="text" ng-model='signUp.username'name="username" id="username" required>
         </label>
         <label>Password:
-          <input type="password" ng-model='user.password'name="password" id="password" required>
+          <input type="password" ng-model='signUp.password'name="password" id="password" required>
         </label>  
         <label>Password:
-          <input type="password" ng-model='user.passwordConfirm'name="passwordConfirm" id="passwordConfirm" required>
+          <input type="password" ng-model='signUp.passwordConfirm'name="passwordConfirm" id="passwordConfirm" required>
         </label>
         <div class="right-align">
-        <input class="btn-large waves-effect waves-light blue lighten-1"  type="submit" ng-click='signup()'>
+        <input class="btn-large waves-effect waves-light blue lighten-1"  type="submit" ng-click='signup()' value='Sign up'>
         </div>
       </form>
     </div>  
 
     <div class="col s6">
-      <h5 class="blue-text lighten-1">Log In</h5
+      <h5 class="blue-text lighten-1">Log In</h5>
         <form>
-          <h5 class="blue-text lighten-1">Sign Up</h5>
-          <label>Username
+          <label>Username:
             <input type="text" ng-model='user.username'name="username" id="username" required>
           </label>
           <label>Password:
@@ -145,6 +144,7 @@
           </label>  
           <input type="submit" ng-click='login()' value='Log In'>
           <input type="submit" ng-click='logout()' value='Log Out'>
+          <input type="submit" ng-click='deleteUser()' value='Delete Account'>
         </form>
 
     </div>  
