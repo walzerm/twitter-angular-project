@@ -18,13 +18,8 @@ app.controller('mainController',['$scope', '$http',
 				console.log(err);
 
 				$scope.userInvalid
-				.directive('userInvalid', function(){
-					return{
-						template: {{userInvalid}} 
-					};
-				});
-			});
-	}
+					});
+				};
 
 		$scope.login = function() {
 			$http({
@@ -45,7 +40,7 @@ app.controller('mainController',['$scope', '$http',
 
 }]);
 
-app.controller('homeCtrl', ['$scope', '$routeParams'function($scope, $routeParams){
+app.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
 	$scope.dashboard = 'welcome';
 
 	$scope.loggedin = function(){
