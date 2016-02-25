@@ -10,18 +10,17 @@ app.config(function($routeProvider, $locationProvider, $httpProvider){
 		controller  : 'mainController'
 	})
 	.when('/user', {
-		templateUrl : '/partials/login.html',
+		templateUrl : 'partials/login.html',
 		controller  : 'mainController'
 	})
 	.when('/new', {
 		templateUrl : 'partials/signup.html',
-		controller  : 'mainController'		
+		controller  : 'mainController'
 	})
 	.otherwise({redirectTo:('/')})
 
-	$locationProvider.html5Mode(true);
+	// $locationProvider.html5Mode(true);
 
 	$httpProvider.interceptors.push('authInterceptor');
 
 })
-
