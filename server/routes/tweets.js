@@ -75,7 +75,7 @@ router.post('/', function(req, res) {
                 })
             })
             knex('tweet_data').where('twitter_handle', screenName).then(function(data) {
-                console.log(data);
+                // do something here with data to send to frontend
             })
         }
     ).catch(
