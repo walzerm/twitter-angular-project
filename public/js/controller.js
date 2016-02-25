@@ -45,6 +45,16 @@ app.controller('mainController',['$scope', '$http',
 				console.log(err);
 			})
 		}
+		$scope.twitterAuth = function(){
+			$http({
+				method:'GET',
+				url:'/auth/twitter'
+			}).then(function(){
+				console.log('yoyoyo')
+			}).catch(function(err){
+				console.log(err)
+			})
+		}
 
 }]);
 

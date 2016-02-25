@@ -4,7 +4,8 @@ exports.up = function(knex, Promise) {
   		table.increments(),
   		table.string('username').unique(),
         table.string('default_twitterhandle'),
-  		table.string('password')
+  		table.string('password'),
+  		table.boolean('registered_by_twitter')
   })
 };
 

@@ -1,15 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var knex = require('../../db/knex');
+var passport = require('passport');
+var TwitterStrategy = require('passport-twitter').Strategy;
 var locus = require('locus');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
+require('dotenv').config();
 
-
+router.use(passport.initialize());
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { username: 'Sentimeta' });
 });
+
 
 //Signup knex statement
 router.post('/new', function(req,res,next){
@@ -64,5 +68,37 @@ router.post('/delete', function(req,res,next){
     })
     }
 });
+
+
+//LOGIN/SIGNUP with Twitter
+
+passport.use(new TwitterStrategy({
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: process.env.HOST + "/auth/twitter/callback"
+  },
+  function(token, tokenSecret, profile, cb) {
+
+    knex('users').insert({
+      username: profile.displayName,
+      default_twitterhandle: profile.username,
+      registered_by_twitter:true
+    }).then(function(){
+      res.send('user added via twitter');
+    });
+    cb();
+  }
+));
+
+//Twitter auth middleware
+router.get('/auth/twitter',
+  passport.authenticate('twitter'));
+
+router.get('/auth/twitter/callback', 
+  passport.authenticate('twitter', { failureRedirect: '/' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 module.exports = router;

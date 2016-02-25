@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
                     'exclude_replies': true
                 },
                 headers: {
-                    "Authorization": "Bearer " + process.env.TWITTER_BEARER_TOKEN
+                    "Twitter Authorization": "twitter-bearer " + process.env.TWITTER_BEARER_TOKEN
                 }
             }, function(err, res, body) {
                 // returns an error if screenName is not a twitter username

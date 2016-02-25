@@ -13,10 +13,13 @@
     "dotenv": "^2.0.0",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
+    "express-session": "^1.13.0",
     "jsonwebtoken": "^5.7.0",
     "knex": "^0.10.0",
     "locus": "^1.2.0",
     "morgan": "~1.6.1",
+    "passport": "^0.3.2",
+    "passport-twitter": "^1.0.4",
     "pg": "^4.4.6",
     "request": "^2.69.0",
     "serve-favicon": "~2.3.0"
