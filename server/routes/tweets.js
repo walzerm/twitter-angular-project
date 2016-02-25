@@ -29,7 +29,7 @@ router.post('/', function(req, res) {
                 }
             }, function(err, res, body) {
                 // returns an error if screenName is not a twitter username
-                if (body.errors) return reject(Error('Please enter a valid twitter username'));
+                if (body.errors) return reject(Error(body.errors[0].message));
                 var tweets = [];
                 body.forEach(function(tweet) {
                     var tweet = {
