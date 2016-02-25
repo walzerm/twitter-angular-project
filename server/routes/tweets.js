@@ -70,11 +70,17 @@ router.post('/', function(req, res) {
                             tweet_favorites: tweet.favs,
                             tweet_date: tweet.date,
                             tweet_score: tweet.polarity
+                        }).then(function() {
+                            console.log('inserted');
                         })
                     }
+
                 })
+
             })
+            console.log('done');
             knex('tweet_data').where('twitter_handle', screenName).then(function(data) {
+                // console.log(data);
                 // do something here with data to send to frontend
             })
         }
