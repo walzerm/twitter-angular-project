@@ -1,12 +1,19 @@
 var express = require('express');
 var router = express.Router();
-var knex = require('../db/knex');
+var knex = require('../../db/knex');
 var request = require('request');
 
-router.get('/tweets', function(req, res) {
-    var screenName = req.body
-    knex('tweetData').where('username', req.body).first().then(function(username) {
-        if (!username) {
+router.get('/', function(req, res, next) {
+  res.render('testTweet');
+});
+
+// Gets the tweet data
+router.post('/', function(req, res) {
+    var screenName = req.body.handle;
+
+    var prom = new Promise(
+        function(resolve, reject) {
+            // API call to the titter API
             var apiURL = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
             request({
                 url: apiURL,
@@ -21,8 +28,9 @@ router.get('/tweets', function(req, res) {
                     "Authorization": "Bearer " + process.env.TWITTER_BEARER_TOKEN
                 }
             }, function(err, res, body) {
+                // returns an error if screenName is not a twitter username
+                if (body.errors) return reject(Error('Please enter a valid twitter username'));
                 var tweets = [];
-
                 body.forEach(function(tweet) {
                     var tweet = {
                         text: tweet.text,
@@ -32,6 +40,7 @@ router.get('/tweets', function(req, res) {
                     };
                     tweets.push(tweet);
                 })
+                // API call to the sentimate API
                 request({
                     url: 'http://www.sentiment140.com/api/bulkClassifyJson',
                     method: 'POST',
@@ -41,13 +50,44 @@ router.get('/tweets', function(req, res) {
                     },
                     body: {"data": tweets}
                 }, function(err, res, body) {
-                    console.log(body);
+                    resolve(body);
                 })
             })
-
         }
-    })
+    ).then(
+        // inserts the tweets into the db if they are not already there
+        function(val) {
+            var data = val.data;
+            data.forEach(function(tweet) {
+                knex('tweet_data').where({
+                    twitter_handle: screenName,
+                    tweet_date: tweet.date
+                }).first().then(function(tweetInTable) {
+                    if (!tweetInTable) {
+                        knex('tweet_data').insert({
+                            twitter_handle: screenName,
+                            tweet_retweets: tweet.retweets,
+                            tweet_favorites: tweet.favs,
+                            tweet_date: tweet.date,
+                            tweet_score: tweet.polarity
+                        })
+                    }
+                })
+            })
+            knex('tweet_data').where('twitter_handle', screenName).then(function(data) {
+                // do something here with data to send to frontend
+            })
+        }
+    ).catch(
+        function(reason) {
+            console.log(reason);
+        }
+    )
+
+    res.redirect('/tweets');
 })
+
+
 
 
 module.exports = router;
