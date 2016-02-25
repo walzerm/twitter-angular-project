@@ -61,19 +61,18 @@ router.post('/login', function(req,res,next){
 	})
 });
 
-// router.post('/delete', function(req,res,next){
-// 	if(req.headers.authorization){
-//         var token = req.headers.authorization.split(' ')[1];
-//         console.log('\n','============')
-//         console.log(req.headers.authorization)
-//         var decoded = jwt.verify(token,process.env.JWT_SECRET);
-//          console.log('\n','============')
-//         console.log(decoded)
+router.post('/delete', function(req,res,next){
+	if(req.headers.authorization){
 
-//     knex('users').where({username: decoded.username}).first().then(function(user){
-//     	console.log('\n', user)
-//     	});
-//     })
-// });
+        var token = req.headers.authorization.split(' ')[1];
+        var decoded = jwt.verify(token,process.env.JWT_SECRET);
+
+        console.log('\n', decoded)
+
+    knex('users').where({username: decoded.username}).first().delete().then(function(result){
+    	res.send('success')
+    })
+    }
+});
 
 module.exports = router;

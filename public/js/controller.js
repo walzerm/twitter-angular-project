@@ -39,8 +39,8 @@ app.controller('mainController',['$scope', '$http',
 				method:'POST',
 				url: '/delete'
 			}).then(function(){
-				res.send('still here huehuehue')
-				localStorage.removeItem('jwt');
+				console.log('yoyoyo')
+				localStorage.removeItem('jwt')
 			})
 			.catch(function(err){
 				console.log('xxxxxxxxxxxxxx')
