@@ -10,7 +10,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider){
 		controller  : 'mainController'
 	})
 	.when('/user', {
-		templateUrl : 'partials/login.html',
+		templateUrl : '/partials/login.html',
 		controller  : 'mainController'
 	})
 	.when('/new', {

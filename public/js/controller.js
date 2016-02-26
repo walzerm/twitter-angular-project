@@ -1,4 +1,4 @@
-app.controller('mainController',['$scope', '$http', 
+app.controller('mainController',['$scope', '$http',
 						 function($scope,   $http){
 
 
@@ -20,7 +20,7 @@ app.controller('mainController',['$scope', '$http',
 		$scope.login = function() {
 			$http({
 				method: "POST",
-				url: "/login",
+				url: "/tweets",
 				data: $scope.user
 			}).then(function(data) {
 				// Save the JWT to localStorage so we can use it later
@@ -47,4 +47,3 @@ app.controller('mainController',['$scope', '$http',
 		}
 
 }]);
-

@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../../db/knex');
 var request = require('request');
+var jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
+
+
 
 router.get('/', function(req, res, next) {
   res.render('testTweet');
@@ -10,16 +14,30 @@ router.get('/', function(req, res, next) {
 // Gets the tweet data
 router.post('/', function(req, res) {
     var screenName;
+    var token;
+    var userID;
 
     var prom = new Promise(
         function(resolve, reject) {
             // API call to the titter API
             console.log('here');
-            knex('users').where('username', req.body.handle).first().then(function(user) {
+            knex('users').where('username', req.body.username).first().then(function(user) {
                 if (!user) {
                     return reject(Error('you suck'))
                 } else {
+                    var pass = req.body.password;
+        			bcrypt.compare(pass,user.password,function(err,result){
+        				if (err){
+        					console.log(err)
+        					res.send('failed login attempt')
+        				} else {
+                      token = jwt.sign({
+                      				username: req.body.username,
+                     				}, process.env.JWT_SECRET);
+        				}
+        			})
                     screenName = user.default_twitterhandle;
+                    userID = user.id;
                     var apiURL = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
                     request({
                         url: apiURL,
@@ -89,6 +107,8 @@ router.post('/', function(req, res) {
             console.log('done');
             knex('tweet_data').where('twitter_handle', screenName).then(function(data) {
                 console.log(data);
+                // CREATE A JWT, AND ADD IT TO DATA
+                res.json({jwt:token, id:userID, data:data});
                 // do something here with data to send to frontend
             })
         }
@@ -98,7 +118,7 @@ router.post('/', function(req, res) {
         }
     )
 
-    res.redirect('/tweets');
+    //res.redirect('/tweets');
 })
 
 
