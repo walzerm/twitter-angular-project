@@ -22,16 +22,26 @@ router.post('/', function(req, res) {
                     return reject(Error('you suck'))
                 } else {
                     var pass = req.body.password;
-        			bcrypt.compare(pass,user.password,function(err,result){
-        				if (err){
-        					console.log(err)
-        					res.send('failed login attempt')
-        				} else {
-                      token = jwt.sign({
-                      				username: req.body.username,
-                     				}, process.env.JWT_SECRET);
-        				}
-        			})
+                    bcrypt.genSalt(10, function(err, salt){
+                        bcrypt.hash(pass, salt, function(err, hash){
+                			bcrypt.compare(hash, user.password, function(err,result){
+                                console.log('trying to login', err, result);
+                				if (err || !result){
+                					console.log('did not login')
+                                    reject({
+                                        err: err,
+                                        passwordsMatched: result
+                                    });
+                				} else {
+                                    console.log('logged in');
+                              token = jwt.sign({
+                              				username: req.body.username,
+                             				}, process.env.JWT_SECRET);
+                				}
+
+                            })
+        			     })
+                    })
                     screenName = user.default_twitterhandle;
                     userID = user.id;
                     var apiURL = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
@@ -108,6 +118,8 @@ router.post('/', function(req, res) {
     ).catch(
         function(reason) {
             console.log(reason);
+            res.status(500);
+            res.send("FAILURE, CHECK SERVER LOGS");
         }
     )
 

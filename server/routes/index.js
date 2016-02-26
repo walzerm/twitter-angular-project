@@ -38,10 +38,12 @@ router.post('/login', function(req,res,next){
 			var pass = req.body.password;
 			console.log(user);
 			bcrypt.compare(pass,user.password,function(err,result){
+				console.log("inside here");
 				if (err){
 					console.log(err)
 					res.send('failed login attempt')
 				} else {
+					console.log(pass);
               var token = jwt.sign({
               				username: req.body.username,
              				}, process.env.JWT_SECRET);
