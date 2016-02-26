@@ -1,5 +1,5 @@
-app.controller('mainController',['$scope', '$http',
-						 function($scope,   $http){
+app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
+						 function($scope,   $http, $rootScope, $location){
 
 
 	$scope.signup = function() {
@@ -25,6 +25,11 @@ app.controller('mainController',['$scope', '$http',
 			}).then(function(data) {
 				// Save the JWT to localStorage so we can use it later
 				localStorage.setItem('jwt', data.data.jwt);
+                $rootScope.currentUser = data.data.twitterHandle;
+                console.log('hi');
+                debugger;
+                $location.path('/dashboard');
+
 			}).catch(function(err){
 				console.log(err);
 			});
@@ -45,5 +50,19 @@ app.controller('mainController',['$scope', '$http',
 				console.log(err);
 			})
 		}
+
+
+}]);
+
+app.controller('dashboardController',['$scope', '$http', '$rootScope',
+						function($scope,   $http, $rootScope){
+                            console.log("hello");
+                            $http({
+                				method: "GET",
+                				url: "/tweets/" + $rootScope.currentUser
+                			}).then(function(data) {
+
+                                $scope.tweets = data;
+                            })
 
 }]);

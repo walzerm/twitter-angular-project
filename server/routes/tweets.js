@@ -7,10 +7,6 @@ var bcrypt = require('bcrypt');
 
 
 
-router.get('/', function(req, res, next) {
-  res.render('testTweet');
-});
-
 // Gets the tweet data
 router.post('/', function(req, res) {
     var screenName;
@@ -105,12 +101,9 @@ router.post('/', function(req, res) {
 
             })
             console.log('done');
-            knex('tweet_data').where('twitter_handle', screenName).then(function(data) {
-                console.log(data);
-                // CREATE A JWT, AND ADD IT TO DATA
-                res.json({jwt:token, id:userID, data:data});
-                // do something here with data to send to frontend
-            })
+            // CREATE A JWT, AND ADD IT TO DATA
+            res.json({jwt:token, id:userID, twitterHandle:screenName});
+            // do something here with data to send to frontend
         }
     ).catch(
         function(reason) {
@@ -119,6 +112,15 @@ router.post('/', function(req, res) {
     )
 
     //res.redirect('/tweets');
+})
+
+router.get('/:username', function(req, res) {
+    var screenName = req.params.username;
+    knex('tweet_data').where('twitter_handle', screenName).then(function(data) {
+        console.log(data);
+        res.json({data:data});
+        // do something here with data to send to frontend
+    })
 })
 
 

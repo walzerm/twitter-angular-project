@@ -4,7 +4,7 @@ app.service('authInterceptor', function($window,$location,$q){
 			var token = localStorage.getItem('jwt');
 
 			if(token) config.headers.Authorization = 'Bearer ' + token
-				console.log(config)
+				// console.log(config)
 			return config;
 		}
 	}
