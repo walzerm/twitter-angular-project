@@ -1,10 +1,11 @@
-var app = angular.module('sentimetaApp', ['angularMoment','ngRoute']);
+var app = angular.module('sentimetaApp', ['angularMoment','ngRoute', 'ngMessages']);
 
 
 
 app.config(function($routeProvider, $locationProvider, $httpProvider){
 
 	$routeProvider
+
 	.when('/', {
 		templateUrl : '/partials/index.html',
 		controller  : 'mainController'
@@ -17,6 +18,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider){
 		templateUrl : 'partials/signup.html',
 		controller  : 'mainController'
 	})
+
     .when('/dashboard', {
 		templateUrl : 'partials/dashboard.html',
 		controller  : 'dashboardController'
@@ -27,4 +29,5 @@ app.config(function($routeProvider, $locationProvider, $httpProvider){
 
 	$httpProvider.interceptors.push('authInterceptor');
 
-})
+});
+
