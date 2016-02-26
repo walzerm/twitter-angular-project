@@ -11,6 +11,7 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 					url: "/new",
 					data: $scope.signUp
 				}).then(function(data) {
+					debugger;
 					localStorage.setItem('jwt', data.data.jwt);
 					$rootScope.currentUser = data.data.twitterHandle;
 					$location.path('/dashboard');
@@ -58,13 +59,14 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 
 app.controller('dashboardController',['$scope', '$http', '$rootScope',
 						function($scope,   $http, $rootScope){
-                            console.log("hello");
+                            console.log($rootScope.currentUser);
                             $http({
                 				method: "GET",
                 				url: "/tweets/" + $rootScope.currentUser
                 			}).then(function(data) {
 
                                 $scope.allTweets = data;
+                                console.log(data);
                                 $scope.handle = data.data.data[0].twitter_handle;
                                 $scope.score = data.data.data[0].tweet_score;
                             })
