@@ -19,7 +19,7 @@ router.post('/new', function(req,res,next){
 		} else { bcrypt.genSalt(10, function(err, salt){
             bcrypt.hash(req.body.password, salt, function(err, hash){
 
-            knex('users').insert({username: req.body.username, password: hash}).returning('id').then(function(id){
+            knex('users').insert({username: req.body.username, default_twitterhandle: req.body.twitter, password: hash}).returning('id').then(function(id){
               var token = jwt.sign({
               				username: req.body.username,
              				}, process.env.JWT_SECRET);
