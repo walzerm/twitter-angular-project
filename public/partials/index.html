@@ -127,7 +127,7 @@
           <!-- <span>your username is {{ signUp.username.length }} characters.</span><br><br> -->
         </label>
 
-        <div class='form-group' ng-class="{ 'has-error' : signUp.password.$invalid && !signUp.password.$pristine ,'has-success' : signUp.password.$valid }">
+        <div class='form-group' ng-class="{ 'has-error' : signUp.password.$invalid && !signUp.password.$pristine ,'has-success' : signUp.password.$valid }"></div>
 
         <label>Password:
           <input type="password" ng-model='signUp.password'name="password" id="password" minlength="6" maxlength="10" ng-required="true"> 
@@ -142,8 +142,9 @@
             <p ng-message="passwordConfirm"></p>
           </div>
           <span ng-show="passwordMatch === false">Passwords dont match</span>
-        </label>
         </div>
+        </label>
+
         <div class="right-align">
         <input class="btn-large waves-effect waves-light blue lighten-1"  type="submit" ng-click='signup()' value='Sign up'>
         </div>
