@@ -14,19 +14,12 @@ router.get('/', function(req, res, next) {
 //Signup knex statement
 router.post('/new', function(req,res,next){
 	knex('users').where({username:req.body.username}).first().then(function(user){
-		console.log('first');
 		if (user || req.body.password !== req.body.passwordConfirm){
-		console.log(user);
-			console.log('second');
-			//#TODO: create error route/template
 			res.send('DANGER: USERNAME/PASSWORD ERROR');
 		} else { bcrypt.genSalt(10, function(err, salt){
-			console.log('third');
             bcrypt.hash(req.body.password, salt, function(err, hash){
 
             knex('users').insert({username: req.body.username, password: hash}).returning('id').then(function(id){
-              //#TODO: create either a user template or just redirect home
-              console.log('fourth');
               var token = jwt.sign({
               				username: req.body.username,
              				}, process.env.JWT_SECRET);
@@ -46,7 +39,6 @@ router.post('/login', function(req,res,next){
 			console.log(user);
 			bcrypt.compare(pass,user.password,function(err,result){
 				if (err){
-					console.log('\n', '================')
 					console.log(err)
 					res.send('failed login attempt')
 				} else {
@@ -61,19 +53,16 @@ router.post('/login', function(req,res,next){
 	})
 });
 
-// router.post('/delete', function(req,res,next){
-// 	if(req.headers.authorization){
-//         var token = req.headers.authorization.split(' ')[1];
-//         console.log('\n','============')
-//         console.log(req.headers.authorization)
-//         var decoded = jwt.verify(token,process.env.JWT_SECRET);
-//          console.log('\n','============')
-//         console.log(decoded)
+router.post('/delete', function(req,res,next){
+	if(req.headers.authorization){
 
-//     knex('users').where({username: decoded.username}).first().then(function(user){
-//     	console.log('\n', user)
-//     	});
-//     })
-// });
+        var token = req.headers.authorization.split(' ')[1];
+        var decoded = jwt.verify(token,process.env.JWT_SECRET);
+
+    knex('users').where({username: decoded.username}).first().delete().then(function(result){
+    	res.send('success')
+    })
+    }
+});
 
 module.exports = router;

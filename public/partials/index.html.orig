@@ -1,3 +1,16 @@
+
+<<<<<<< HEAD
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title> Sentimeta </title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+</head> -->
+
+=======
+>>>>>>> master
+
   <nav>
     <div class="nav-wrapper blue lighten-1">
       <a href="#" class="brand-logo"><img src="/images/sentilogo.png" style="padding:8px; height: 1.8em"></a>
@@ -141,11 +154,11 @@
           <div ng-show="passwordError">
             <p ng-message="passwordConfirm"></p>
           </div>
-          <span ng-show="passwordMatch === false">Passwords dont match</span>
+          <span ng-show="passwordMatch">Passwords dont match</span>
         </label>
         </div>
         <div class="right-align">
-        <input class="btn-large waves-effect waves-light blue lighten-1"  type="submit" ng-click='signup()' value='Sign up'>
+        <input class="btn-large waves-effect waves-light blue lighten-1"  type="button" ng-click='$parent.signup()' value='Sign up'ng-disabled="signUp.$invalid">
         </div>
       </form>
     </div>
@@ -153,6 +166,7 @@
     <div class="col s6">
       <h5 class="blue-text lighten-1">Log In</h5>
         <form>
+        {{user}}
           <label>Username:
             <input type="text" ng-model='user.username'name="username" id="username" required>
           </label>
@@ -170,4 +184,7 @@
   </div>
 
 <script src="/js/init.js"></script> 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master

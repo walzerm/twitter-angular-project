@@ -1,5 +1,10 @@
-app.controller('mainController',['$scope', '$http', 
+<<<<<<< HEAD
+app.controller('mainController',['$scope', '$http', 'ngMessages', 
+						 function($scope,   $http, $ngMessages){
+=======
+app.controller('mainController',['$scope', '$http',
 						 function($scope,   $http){
+>>>>>>> master
 
 
 	$scope.signup = function() {
@@ -51,4 +56,17 @@ app.controller('mainController',['$scope', '$http',
 		}
 
 }]);
+<<<<<<< HEAD
 
+	// $scope.passwordError = $scope.signUp.password === $scope.signUp;
+
+app.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
+	$scope.dashboard = 'welcome';
+
+	$scope.loggedin = function(){
+		
+	}
+}]);
+
+=======
+>>>>>>> master
