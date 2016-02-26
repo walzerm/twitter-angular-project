@@ -2,7 +2,7 @@
 
   <nav>
     <div class="nav-wrapper blue lighten-1">
-      <a href="#" class="brand-logo"><img src="/images/sentilogo.png" style="padding:8px; height: 1.8em"></a>
+      <a href="#" class="brand-logo"><img src="/images/sentilogo.png" style="padding:2px; padding-left:5px; height: 1.8em"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="#">lorem</a></li>
         <li><a href="#">ipsum</a></li>
@@ -40,7 +40,7 @@
 
 
         <div class="col s12 m6">
-          chart will go here.
+chart goes here
         </div>
 
         <div class="col s12 m6">
@@ -123,10 +123,16 @@
         <label>Username
           <input type="text" ng-model='signUp.username'name="username" id="username" required>
         </label>
+
+        <label>Twitter Handle:
+          <input type="text" ng-model='signUp.twitter'name="twitter" id="twitter" required>
+        </label>
+
         <label>Password:
           <input type="password" ng-model='signUp.password'name="password" id="password" required>
-        </label>  
-        <label>Password:
+        </label>
+
+        <label>Confirm Password:
           <input type="password" ng-model='signUp.passwordConfirm'name="passwordConfirm" id="passwordConfirm" required>
         </label>
         <div class="right-align">
@@ -144,7 +150,7 @@
           <label>Password:
             <input type="password" ng-model='user.password'name="password" id="password" required>
           </label>
-          <input type="submit" ng-click='login()' value='Log In'>
+          <input type="submit" ng-click='login()' value='Log In' class="modal-action modal-close">
           <input type="submit" ng-click='logout()' value='Log Out'>
           <input type="submit" ng-click='deleteUser()' value='Delete Account'>
         </form>
@@ -154,4 +160,4 @@
   </div>
   </div>
 
-<script src="/js/init.js"></script> 
+<script src="/js/init.js"></script>
