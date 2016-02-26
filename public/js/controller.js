@@ -1,23 +1,25 @@
-app.controller('mainController',['$scope', '$http', 
-						 function($scope,   $http){
+app.controller('mainController',['$scope', '$http', 'ngMessages', 
+						 function($scope,   $http, $ngMessages){
 
 
 	$scope.signup = function() {
-			$http({
-				method: "POST",
-				url: "/new",
-				data: $scope.signUp
-			}).then(function(data) {
-				// Save the JWT to localStorage so we can use it later
+		$scope.passwordMatch = $scope.signUp.password === $scope.signUp.passwordConfirm;
+			debugger;
+			if ($scope.passwordMatch){
+				$http({
+					method: "POST",
+					url: "/new",
+					data: $scope.signUp
+				}).then(function(data) {
+					// Save the JWT to localStorage so we can use it later
 
-				localStorage.setItem('jwt', data.data.jwt);
-				// $scope.user.id = data.data.id
-			}).catch(function(err){
-				console.log(err);
+					localStorage.setItem('jwt', data.data.jwt);
+					// $scope.user.id = data.data.id
+				}).catch(function(err){
 
-				$scope.userInvalid
-					});
-				};
+				});
+			} 
+	};
 
 		$scope.login = function() {
 			$http({
@@ -51,6 +53,8 @@ app.controller('mainController',['$scope', '$http',
 		}
 
 }]);
+
+	// $scope.passwordError = $scope.signUp.password === $scope.signUp;
 
 app.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
 	$scope.dashboard = 'welcome';

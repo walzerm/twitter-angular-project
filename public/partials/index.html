@@ -28,7 +28,7 @@
         <h1 class="header center blue-text text-lighten-1">How have you been?</h1>
         <div class="row center">
 
-          <h5 class="header col s12 light white-text" >Providing superior personal mood tracking through the examining of online presence and emotional projection.</h5>
+          <h5 class="header col s12 light white-text" >Providing superior personal mood tracking through the examination of online presence and emotional projection.</h5>
 
         </div>
         <!-- send to login/sign-up -->
@@ -130,18 +130,32 @@
     <div class="row">
     <div class="col s6">
       <h5 class="blue-text lighten-1">Sign Up</h5>
-      <form>
-        <label>Username
-          <input type="text" ng-model='signUp.username'name="username" id="username" required>
+      <form name="myForm">
+
+        <label>Username:
+          <input type="text" ng-model='signUp.username'name="username" id="username" maxlength="10"  required>
+          <!-- <span>your username is {{ signUp.username.length }} characters.</span><br><br> -->
         </label>
+
+        <div class='form-group' ng-class="{ 'has-error' : signUp.password.$invalid && !signUp.password.$pristine ,'has-success' : signUp.password.$valid }">
+
         <label>Password:
-          <input type="password" ng-model='signUp.password'name="password" id="password" required>
+          <input type="password" ng-model='signUp.password'name="password" id="password" minlength="6" maxlength="10" ng-required="true"> 
+          <div ng-messages="signUp.password.$error">
+          <!-- <p ng-message="'maxlength">password is too long</p> -->
+          </div>
         </label>  
         <label>Password:
-          <input type="password" ng-model='signUp.passwordConfirm'name="passwordConfirm" id="passwordConfirm" required>
+          <input type="password" ng-model='signUp.passwordConfirm'name="passwordConfirm" id="passwordConfirm" minlength="6" maxlength="10" ng-pattern="signUp.password" ng-required="true">
+          <div ng-messages="signUp.password.$error">
+          <div ng-show="passwordError">
+            <p ng-message="passwordConfirm"></p>
+          </div>
+          <span ng-show="passwordMatch">Passwords dont match</span>
         </label>
+        </div>
         <div class="right-align">
-        <input class="btn-large waves-effect waves-light blue lighten-1"  type="submit" ng-click='signup()' value='Sign up'>
+        <input class="btn-large waves-effect waves-light blue lighten-1"  type="button" ng-click='$parent.signup()' value='Sign up'ng-disabled="signUp.$invalid">
         </div>
       </form>
     </div>  
@@ -149,6 +163,7 @@
     <div class="col s6">
       <h5 class="blue-text lighten-1">Log In</h5>
         <form>
+        {{user}}
           <label>Username:
             <input type="text" ng-model='user.username'name="username" id="username" required>
           </label>
