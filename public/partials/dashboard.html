@@ -1,8 +1,31 @@
-<html>
-<head>
-	<title></title>
-</head>
 <body ng-controller='dashboardController'>
-    {{ tweets }}
-</body>
-</html>
+
+<nav>
+  <div class="nav-wrapper blue lighten-1">
+    <a href="#" class="brand-logo"><img src="/images/sentilogo.png" style="padding:8px; height: 1.8em"></a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+<div class="center-text">
+      <li><a href="#">lorem</a></li>
+      <li><a href="#">ipsum</a></li>
+
+
+    </ul>
+  </div>
+</nav>
+
+
+
+<div class="row">
+   <div class="col s12 m8 offset-m2">
+     <div class="card white ">
+       <div class="card-content black-text">
+         <span class="card-title">Sentiment Analysis for <span style="color:#00bbff">{{ handle }}</span></span>
+         <p>I am a very simple card. I am good at containing small bits of information.
+         I am convenient because I require little markup to use effectively.</p>
+
+         <canvas id="myChart" width="400" height="400"></canvas>
+       </div>
+     </div>
+   </div>
+ </div>

@@ -34,7 +34,6 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 
                 $rootScope.currentUser = data.data.twitterHandle;
                 console.log('hi');
-                debugger;
                 $location.path('/dashboard');
 
 			}).catch(function(err){
@@ -69,7 +68,9 @@ app.controller('dashboardController',['$scope', '$http', '$rootScope',
                 				url: "/tweets/" + $rootScope.currentUser
                 			}).then(function(data) {
 
-                                $scope.tweets = data;
+                                $scope.allTweets = data;
+                                $scope.handle = data.data.data[0].twitter_handle;
+                                $scope.score = data.data.data[0].tweet_score;
                             })
 
 }]);
