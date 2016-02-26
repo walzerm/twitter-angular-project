@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var knex = require('./db/knex');
 
 var routes = require('./server/routes/index');
-var api = require('./api/apiRoutes');
 var tweet = require('./server/routes/tweets');
 
 app = express();
@@ -28,7 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/api', api);
 app.use('/tweets', tweet);
 
 // catch 404 and forward to error handler

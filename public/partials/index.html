@@ -1,4 +1,4 @@
-  <nav>
+l  <nav>
     <div class="nav-wrapper blue lighten-1">
       <a href="#/" class="brand-logo"><img src="/images/sentilogo.png" style="padding:2px; padding-left:5px; height: 1.8em"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -149,6 +149,9 @@
           <!-- <span>your username is {{ signUp.username.length }} characters.</span><br><br> -->
         </label>
 
+        <label>Twitter Handle:
+          <input type="text" ng-model='signUp.twitter'name="twitter" id="twitter" required>
+        </label>
 
         <div class='form-group' ng-class="{ 'has-error' : signUp.password.$invalid && !signUp.password.$pristine ,'has-success' : signUp.password.$valid }"></div>
 
@@ -158,25 +161,15 @@
           <!-- <p ng-message="'maxlength">password is too long</p> -->
           </div>
         </label>
-        <label>Password:
+        <label>Confirm Password:
           <input type="password" ng-model='signUp.passwordConfirm'name="passwordConfirm" id="passwordConfirm" minlength="6" maxlength="10" ng-pattern="signUp.password" ng-required="true">
           <div ng-messages="signUp.password.$error">
           <div ng-show="passwordError">
             <p ng-message="passwordConfirm"></p>
           </div>
-          <span ng-show="passwordMatch === false">Passwords dont match</span>
+          <span style="color:red;" ng-show="passwordMatch === false">Passwords do not match</span>
         </div>
-        <label>Twitter Handle:
-          <input type="text" ng-model='signUp.twitter'name="twitter" id="twitter" required>
-        </label>
 
-        <label>Password:
-          <input type="password" ng-model='signUp.password'name="password" id="password" required>
-        </label>
-
-        <label>Confirm Password:
-          <input type="password" ng-model='signUp.passwordConfirm'name="passwordConfirm" id="passwordConfirm" required>
-        </label>
 
         <div class="right-align">
         <input class="btn waves-effect waves-light blue lighten-1 modal-action modal-close"  type="submit" ng-click='signup()' value='Sign up'>
