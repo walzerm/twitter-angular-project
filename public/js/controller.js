@@ -25,6 +25,8 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 			}).then(function(data) {
 				// Save the JWT to localStorage so we can use it later
 				localStorage.setItem('jwt', data.data.jwt);
+				  $('#modal1').closeModal();
+
                 $rootScope.currentUser = data.data.twitterHandle;
                 console.log('hi');
                 debugger;
