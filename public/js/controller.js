@@ -19,7 +19,7 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 				}).catch(function(err){
 
 				});
-			} 
+			}
 	};
 
 		$scope.login = function() {
@@ -67,9 +67,66 @@ app.controller('dashboardController',['$scope', '$http', '$rootScope',
                 			}).then(function(data) {
 
                                 $scope.allTweets = data;
+
                                 $scope.handle = data.data.data[0].twitter_handle;
-                                $scope.score = data.data.data[0].tweet_score;
+
+                                $scope.score = data.data.data.map( function(tweet){
+                                    return tweet.tweet_score;
+                                });
+
+                                chartRender($scope.score);
+
                             })
 
 }]);
 
+function chartRender(tweetParse) {
+    var ctx = $('#myChart').get(0).getContext('2d');
+
+
+var posi=0;
+var neut=0;
+var neg=0;
+
+for(var i = 0; i < tweetParse.length; i++) {
+    var score = tweetParse[i];
+
+    if (score == "0"){
+        neg++;
+    }
+    if (score == "4"){
+        posi++;
+    }
+
+    if(score == "2"){
+        neut++;
+    }
+
+
+}
+
+var renderChart = [
+    {
+        value: posi,
+        color:"#00bbff",
+        highlight: "#4fd0ff",
+        label: "positive"
+    },
+    // {
+    //     value: neut,
+    //     color: "#e2e2e2",
+    //     highlight: "#eee",
+    //     label: "neutral"
+    // },
+    {
+        value: neg,
+        color: "#ee2560",
+        highlight: "#ff497e",
+        label: "negative"
+    }
+
+];
+
+
+    var chart = new Chart(ctx).Doughnut(renderChart);
+}
