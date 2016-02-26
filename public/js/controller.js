@@ -5,17 +5,16 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 
 	$scope.signup = function() {
 		$scope.passwordMatch = $scope.signUp.password === $scope.signUp.passwordConfirm;
-			debugger;
 			if ($scope.passwordMatch){
 				$http({
 					method: "POST",
 					url: "/new",
 					data: $scope.signUp
 				}).then(function(data) {
-					// Save the JWT to localStorage so we can use it later
-
+					debugger;
 					localStorage.setItem('jwt', data.data.jwt);
-					// $scope.user.id = data.data.id
+					$rootScope.currentUser = data.data.twitterHandle;
+					$location.path('/dashboard');
 				}).catch(function(err){
 
 				});
@@ -30,8 +29,6 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 			}).then(function(data) {
 				// Save the JWT to localStorage so we can use it later
 				localStorage.setItem('jwt', data.data.jwt);
-				  $('#modal1').closeModal();
-
                 $rootScope.currentUser = data.data.twitterHandle;
                 console.log('hi');
                 $location.path('/dashboard');
@@ -62,13 +59,14 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 
 app.controller('dashboardController',['$scope', '$http', '$rootScope',
 						function($scope,   $http, $rootScope){
-                            console.log("hello");
+                            console.log($rootScope.currentUser);
                             $http({
                 				method: "GET",
                 				url: "/tweets/" + $rootScope.currentUser
                 			}).then(function(data) {
 
                                 $scope.allTweets = data;
+                                console.log(data);
                                 $scope.handle = data.data.data[0].twitter_handle;
                                 $scope.score = data.data.data[0].tweet_score;
                             })

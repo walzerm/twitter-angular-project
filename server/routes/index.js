@@ -13,23 +13,28 @@ router.get('/', function(req, res, next) {
 
 //Signup knex statement
 router.post('/new', function(req,res,next){
-	knex('users').where({username:req.body.username}).first().then(function(user){
-		if (user || req.body.password !== req.body.passwordConfirm){
-			res.send('DANGER: USERNAME/PASSWORD ERROR');
-		} else { bcrypt.genSalt(10, function(err, salt){
-            bcrypt.hash(req.body.password, salt, function(err, hash){
+	if (req.body.password !== req.body.passwordConfirm) {
+		res.send('DANGER: USERNAME/PASSWORD ERROR');
+	} else {
+		knex('users').where({username:req.body.username}).first().then(function(user){
+			if (user){
+				res.send('DANGER: USERNAME/PASSWORD ERROR');
+			} else { bcrypt.genSalt(10, function(err, salt){
+	            bcrypt.hash(req.body.password, salt, function(err, hash){
 
-            knex('users').insert({username: req.body.username, default_twitterhandle: req.body.twitter, password: hash}).returning('id').then(function(id){
-              var token = jwt.sign({
-              				username: req.body.username,
-             				}, process.env.JWT_SECRET);
+	            knex('users').insert({username: req.body.username, default_twitterhandle: req.body.twitter, password: hash}).returning('id').then(function(id){
+	              var token = jwt.sign({
+	              				username: req.body.username,
+	             				}, process.env.JWT_SECRET);
 
-              res.json({jwt:token, id:id})
-            });
-          });
-        });
-      }
-	})
+	              res.json({jwt:token, id:id, twitterHandle: req.body.twitter})
+
+	            });
+	          });
+	        });
+	      }
+		})
+	}
 })
 //Signin request and setting the JWT
 router.post('/login', function(req,res,next){
@@ -38,10 +43,12 @@ router.post('/login', function(req,res,next){
 			var pass = req.body.password;
 			console.log(user);
 			bcrypt.compare(pass,user.password,function(err,result){
+				console.log("inside here");
 				if (err){
 					console.log(err)
 					res.send('failed login attempt')
 				} else {
+					console.log(pass);
               var token = jwt.sign({
               				username: req.body.username,
              				}, process.env.JWT_SECRET);

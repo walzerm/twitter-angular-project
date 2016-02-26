@@ -9,9 +9,12 @@ var bcrypt = require('bcrypt');
 
 // Gets the tweet data
 router.post('/', function(req, res) {
+    // These variables need to be shared across the
+    // login closure scope
     var screenName;
     var token;
     var userID;
+    var dbUser;
 
     var prom = new Promise(
         function(resolve, reject) {
@@ -21,57 +24,24 @@ router.post('/', function(req, res) {
                 if (!user) {
                     return reject(Error('you suck'))
                 } else {
+                    dbUser = user;
                     var pass = req.body.password;
-        			bcrypt.compare(pass,user.password,function(err,result){
-        				if (err){
-        					console.log(err)
-        					res.send('failed login attempt')
+        			bcrypt.compare(pass, user.password, function(err,result){
+                        console.log(pass, user.password);
+                        console.log('trying to login', err, result);
+        				if (err || !result){
+        					console.log('did not login')
+                            reject({
+                                err: err,
+                                passwordsMatched: result
+                            });
         				} else {
-                      token = jwt.sign({
+                            console.log('logged in');
+                            token = jwt.sign({
                       				username: req.body.username,
                      				}, process.env.JWT_SECRET);
+                            _handleSuccessfulLogin(resolve);
         				}
-        			})
-                    screenName = user.default_twitterhandle;
-                    userID = user.id;
-                    var apiURL = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-                    request({
-                        url: apiURL,
-                        method: 'GET',
-                        json: true,
-                        qs: {
-                            'screen_name': screenName,
-                            'count': 200,
-                            'exclude_replies': true
-                        },
-                        headers: {
-                            "Authorization": "Bearer " + process.env.TWITTER_BEARER_TOKEN
-                        }
-                    }, function(err, res, body) {
-                        // returns an error if screenName is not a twitter username
-                        if (body.errors) return reject(Error(body.errors[0].message));
-                        var tweets = [];
-                        body.forEach(function(tweet) {
-                            var tweet = {
-                                text: tweet.text,
-                                date: new Date(tweet.created_at),
-                                retweets: tweet.retweet_count,
-                                favs: tweet.favorite_count
-                            };
-                            tweets.push(tweet);
-                        })
-                        // API call to the sentimate API
-                        request({
-                            url: 'http://www.sentiment140.com/api/bulkClassifyJson',
-                            method: 'POST',
-                            json: true,
-                            qs: {
-                                'appid': process.env.SENTIMENT_TOKEN
-                            },
-                            body: {"data": tweets}
-                        }, function(err, res, body) {
-                            resolve(body);
-                        })
                     })
                 }
             });
@@ -108,8 +78,56 @@ router.post('/', function(req, res) {
     ).catch(
         function(reason) {
             console.log(reason);
+            res.status(500);
+            res.send("FAILURE, CHECK SERVER LOGS");
         }
     )
+
+    // Internal helper to handle successful login
+    // Accepts the resolve function from the promise
+    function _handleSuccessfulLogin(resolve) {
+        screenName = dbUser.default_twitterhandle;
+        userID = dbUser.id;
+        var apiURL = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+        request({
+            url: apiURL,
+            method: 'GET',
+            json: true,
+            qs: {
+                'screen_name': screenName,
+                'count': 200,
+                'exclude_replies': true
+            },
+            headers: {
+                "Authorization": "Bearer " + process.env.TWITTER_BEARER_TOKEN
+            }
+        }, function(err, res, body) {
+            // returns an error if screenName is not a twitter username
+            if (body.errors) return reject(Error(body.errors[0].message));
+            var tweets = [];
+            body.forEach(function(tweet) {
+                var tweet = {
+                    text: tweet.text,
+                    date: new Date(tweet.created_at),
+                    retweets: tweet.retweet_count,
+                    favs: tweet.favorite_count
+                };
+                tweets.push(tweet);
+            })
+            // API call to the sentimate API
+            request({
+                url: 'http://www.sentiment140.com/api/bulkClassifyJson',
+                method: 'POST',
+                json: true,
+                qs: {
+                    'appid': process.env.SENTIMENT_TOKEN
+                },
+                body: {"data": tweets}
+            }, function(err, res, body) {
+                resolve(body);
+            })
+        })
+    }
 
     //res.redirect('/tweets');
 })
