@@ -40,6 +40,7 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 
 		$scope.logout = function() {
 					localStorage.removeItem('jwt');
+                    $location.path('/');
 	}
 
 		$scope.deleteUser = function(){
@@ -57,8 +58,8 @@ app.controller('mainController',['$scope', '$http', '$rootScope', '$location',
 
 }]);
 
-app.controller('dashboardController',['$scope', '$http', '$rootScope',
-						function($scope,   $http, $rootScope){
+app.controller('dashboardController',['$scope', '$http', '$rootScope', '$location',
+						function($scope,   $http, $rootScope, $location){
                             console.log($rootScope.currentUser);
                             $http({
                 				method: "GET",
@@ -70,6 +71,8 @@ app.controller('dashboardController',['$scope', '$http', '$rootScope',
                                 console.log(data);
                                 $scope.handle = data.data.data[0].twitter_handle;
 
+
+
                                 $scope.score = data.data.data.map( function(tweet){
                                     return tweet.tweet_score;
                                 });
@@ -77,6 +80,11 @@ app.controller('dashboardController',['$scope', '$http', '$rootScope',
                                 chartRender($scope.score);
 
                             })
+
+                            $scope.logout = function() {
+                    					localStorage.removeItem('jwt');
+                                        $location.path('/');
+                    	}
 
 }]);
 
